@@ -22,8 +22,6 @@ void sieve(int thread, bool* primes);
 
 int main() {
 
-    //bool* primes = (bool*)calloc(n,sizeof(bool));
-
     //initial attempt of finding prime
 	//boolean array for indicating prime number
 	bool* nums = (bool*)malloc(sizeof(bool) * maxNum);
@@ -39,6 +37,7 @@ int main() {
 	nums[0] = false; 
 	nums[1] = false;
 
+	//start of our timer 
     double start = clock();
 
     //Implement our thead
@@ -48,47 +47,56 @@ int main() {
 		threads[i] = std::thread(sieve, i, nums);
 	}
 	
-	// Join threads
+	//join our threads
 	for(i = 0; i < threadNum; i++) {
 		threads[i].join();
 	}
 
+	//end of our timer
     double end = clock();
+
+	//total time to run threads
 	double time = (end - start);
 
-	unsigned long long sum = 0;
 
+	unsigned long long primeSum = 0;
 	int numPrimes = 0;
-	for (int i = 2; i < maxNum; i++) {
-		if (nums[i]) {
-			sum += i;
+	
+	//ignore 0 to 1
+	//add up sum of prime
+	//as well as the number of prime numbers
+	for(int i = 2; i < maxNum; i++) {
+		if(nums[i]) {
+			primeSum += i;
 			numPrimes++;
 		}
 	}
 
-	int largestPrimes[10];
+	int topPrime[10];
 
 	int j = 9;
 
+	//10000000 is not prime
+	//search for prime numbers starting from end
 	for (int i = maxNum - 1; j >= 0; i--) {
 		if (nums[i]) {
-			largestPrimes[j] = i;
+			topPrime[j] = i;
 			j--;
 		}
 	}
 
 	// file ouptut contents
-	std::ofstream file("primes.txt");
+	std::ofstream file("primeResults.txt");
 
-	file << time << "s" << " " << numPrimes << " " << sum << std::endl;
+	file << time << "s" << " " << numPrimes << " " << primeSum << std::endl;
+
+	//print our laargest prime numbers from least to greatest
 	for (int i = 0; i < 10; i++) {
-		file << largestPrimes[i] << " ";
+		file << topPrime[i] << " ";
 	}
 	file << "\n";
 
-	//file output
-	std::ofstream file("primeResults.txt");
-
+	
 	//free our memory
 	free(nums);
 	//close our file 
@@ -105,12 +113,12 @@ void sieve(int thread, bool* nums) {
 
     for(i = thread; i <= temp; i+=8){
 
-        if (nums[i]) {
+        if(nums[i]) {
 			int a = i * i;
 
             int b = 0;
 
-			while (a < maxNum) {
+			while(a < maxNum) {
 				nums[a] = false;
                 b+=1;
 				a = (i * i) + (b * i);
