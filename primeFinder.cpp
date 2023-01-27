@@ -7,6 +7,9 @@
 #include <functional>
 #include <vector>
 #include <cmath>
+//for our threads
+#include <thread>
+#include <pthread.h>
 
 
 //range for finding prime
@@ -14,6 +17,8 @@
 
 //our desired thread count
 #define threadNum 8
+
+void sieve(int thread, bool* primes);
 
 int main() {
     //initial attempt of finding prime
@@ -33,6 +38,19 @@ int main() {
 	primes[0] = false; 
 	primes[1] = false;
 
+    //Implement our thead
+	std::thread threads[threadNum];
+
+    
+	for (int i = 0; i < threadNum; i++) {
+		threads[i] = std::thread(sieve, i, primes);
+	}
+	
+	// Join threads
+	for (int i = 0; i < threadNum; i++) {
+		threads[i].join();
+	}
+
 	//file output
 	std::ofstream file("primeResults.txt");
 
@@ -42,5 +60,10 @@ int main() {
 	file.close();
 
 	return 0;
+}
+
+void sieve(int thread, bool* primes) {
+
+    
 }
 
