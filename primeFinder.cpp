@@ -3,10 +3,11 @@
 // 01/24/2023
 
 #include <iostream>
+#include <fstream>
 #include <functional>
 #include <vector>
 #include <cmath>
-#include <fstream>
+
 
 //range for finding prime
 #define maxPrime 100000000
@@ -15,22 +16,25 @@
 #define threadNum 8
 
 int main() {
-	// Prime array, all set to true by default
+    //initial attempt of finding prime
+	//boolean array for indicating prime number
 	bool* primes = (bool*)malloc(sizeof(bool) * maxPrime);
 
 	//bool* primes = (bool*)calloc(n,sizeof(bool));
 	
-	for (int i = 0; i < maxPrime; i++) {
+    int i;
+
+    //set array as true for default
+	for (i = 0; i < maxPrime; i++) {
 		primes[i] = true;
 	}
 	
-	// 0 and 1 are not prime or composiste, so set to false and not included for prime
+    //0 and 1 are not prime or composite, so set to false and not included for prime
 	primes[0] = false; 
 	primes[1] = false;
 
-	// Output to file
-	std::string filename = "primeResults.txt";
-	std::ofstream file(filename);
+	//file output
+	std::ofstream file("primeResults.txt");
 
 	//free our memory
 	free(primes);
