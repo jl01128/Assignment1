@@ -23,31 +23,31 @@ void sieve(int thread, bool* primes);
 int main() {
     //initial attempt of finding prime
 	//boolean array for indicating prime number
-	bool* primes = (bool*)malloc(sizeof(bool) * maxPrime);
+	bool* nums = (bool*)malloc(sizeof(bool) * maxPrime);
 
 	//bool* primes = (bool*)calloc(n,sizeof(bool));
 	
     int i;
 
     //set array as true for default
-	for (i = 0; i < maxPrime; i++) {
-		primes[i] = true;
+	for(i = 0; i < maxPrime; i++) {
+		nums[i] = true;
 	}
 	
     //0 and 1 are not prime or composite, so set to false and not included for prime
-	primes[0] = false; 
-	primes[1] = false;
+	nums[0] = false; 
+	nums[1] = false;
 
     //Implement our thead
 	std::thread threads[threadNum];
 
     
-	for (int i = 0; i < threadNum; i++) {
-		threads[i] = std::thread(sieve, i, primes);
+	for(i = 0; i < threadNum; i++) {
+		threads[i] = std::thread(sieve, i, nums);
 	}
 	
 	// Join threads
-	for (int i = 0; i < threadNum; i++) {
+	for(i = 0; i < threadNum; i++) {
 		threads[i].join();
 	}
 
@@ -55,15 +55,16 @@ int main() {
 	std::ofstream file("primeResults.txt");
 
 	//free our memory
-	free(primes);
+	free(nums);
 	//close our file 
 	file.close();
 
 	return 0;
 }
 
-void sieve(int thread, bool* primes) {
+//sieve algortihm finds our primes
+void sieve(int thread, bool* nums) {
 
-    
+
 }
 
