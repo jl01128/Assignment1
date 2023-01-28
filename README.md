@@ -40,4 +40,10 @@ Example output
 
 ```
 
+Experimental evaluation 
+
+```
+Through my evaluation, the program with the inclusion of sieve of eratosthenes has a time complexuty O(n*log(log(n))) and through several experimentral runthrough, the program solves the problem with a average of 1.4602 seconds. 
+
+```
 
