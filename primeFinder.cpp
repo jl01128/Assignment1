@@ -11,12 +11,14 @@
 #include <thread>
 #include <pthread.h>
 
-
 //range for finding prime
 #define maxNum 100000000
 
 //our desired thread count
 #define threadNum 8
+
+//top ten 
+#define topTen 10
 
 void sieve(int thread, bool* primes);
 
@@ -73,26 +75,29 @@ int main() {
 		}
 	}
 
+	// holds our top ten prime numbers
 	int topPrime[10];
-
-	int j = 9;
+	int t = topTen - 1;
 
 	//10000000 is not prime
 	//search for prime numbers starting from end
-	for (int i = maxNum - 1; j >= 0; i--) {
-		if (nums[i]) {
-			topPrime[j] = i;
-			j--;
+	//ends after our 10 top prime numbers are taken
+	for(int i = maxNum - 1; t >= 0; i--) {
+		//gets our top ten prime numbers starting from max
+		if(nums[i]) {
+			topPrime[t] = i;
+			t--;
 		}
 	}
 
 	// file ouptut contents
 	std::ofstream file("primeResults.txt");
 
+	//output text
 	file << time << "s" << " " << numPrimes << " " << primeSum << std::endl;
 
 	//print our laargest prime numbers from least to greatest
-	for (int i = 0; i <= 9; i++) {
+	for (int i = 0; i <= topTen-1; i++) {
 		file << topPrime[i] << " ";
 	}
 	file << "\n";
@@ -110,19 +115,23 @@ int main() {
 void sieve(int thread, bool* nums) {
 
     int i;
+	//returns the smallest number greater than sqaure root of maxNum
     int temp = ceil(sqrt(maxNum));
 
 	//
-    for(i = thread; i <= temp; i+=8){
-
+    for(i = thread; i <= temp; i += threadNum){
+		//checks for prime nums through the given d
         if(nums[i]) {
-			int a = i * i;
 
+			int a = i * i;
             int b = 0;
 
+			//Update all multiples of a greater than or equal to the square of it numbers which are
+            //multiple of a and are less than p^2 arealready been marked.
 			while(a < maxNum) {
 				nums[a] = false;
-                b+=1;
+                b += 1;
+
 				a = (i * i) + (b * i);
 			}
 		}
