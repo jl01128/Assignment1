@@ -126,8 +126,8 @@ void sieve(int thread, bool* nums) {
 			int a = i * i;
             int b = 0;
 
-			//Update all multiples of a greater than or equal to the square of it numbers which are
-            //multiple of a and are less than p^2 arealready been marked.
+			//Update all multiples of "a" greater than the square of it numbers, which are
+            //multiple of "a" and is less than p^2 have been marked
 			while(a < maxNum) {
 				nums[a] = false;
                 b += 1;
