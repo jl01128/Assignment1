@@ -66,6 +66,7 @@ int main() {
 	//add up sum of prime
 	//as well as the number of prime numbers
 	for(int i = 2; i < maxNum; i++) {
+		//check if it is a prime number
 		if(nums[i]) {
 			primeSum += i;
 			numPrimes++;
@@ -91,7 +92,7 @@ int main() {
 	file << time << "s" << " " << numPrimes << " " << primeSum << std::endl;
 
 	//print our laargest prime numbers from least to greatest
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i <= 9; i++) {
 		file << topPrime[i] << " ";
 	}
 	file << "\n";
@@ -111,6 +112,7 @@ void sieve(int thread, bool* nums) {
     int i;
     int temp = ceil(sqrt(maxNum));
 
+	//
     for(i = thread; i <= temp; i+=8){
 
         if(nums[i]) {
