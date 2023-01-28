@@ -29,6 +29,7 @@ Solutions and its Efficieny
 ```
 
 Output
+
 (Results are given through a file output called "primeResults.txt")
 
 ```
